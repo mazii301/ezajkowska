@@ -10,18 +10,18 @@
 .hero-meta strong{display:block;font:600 11px/1.6 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
 .hero-visual{position:relative;justify-self:center;width:min(100%,520px)}
 .arch{border-radius:999px 999px 0 0;overflow:hidden;position:relative}
-.hero-photo{position:relative;z-index:1;aspect-ratio:4/5;background:var(--paper-3);will-change:transform}
+.hero-photo{position:relative;z-index:1;aspect-ratio:4/5;background:var(--paper-3)}
 .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
 .hero-dim{position:absolute;inset:0;background:var(--paper);opacity:0;pointer-events:none}
-.blob{position:absolute;z-index:0;inset:6% -14% -6% -10%;background:radial-gradient(circle at 35% 35%,var(--sage-2),var(--sage) 70%);opacity:.55;border-radius:58% 42% 47% 53%/45% 55% 45% 55%;animation:morph 16s ease-in-out infinite alternate;filter:blur(2px)}
+.blob{position:absolute;z-index:0;inset:6% -14% -6% -10%;background:radial-gradient(circle at 35% 35%,var(--sage-2),var(--sage) 70%);opacity:.55;border-radius:58% 42% 47% 53%/45% 55% 45% 55%;animation:morph 18s ease-in-out infinite alternate;will-change:transform}
 @keyframes morph{
-  0%{border-radius:58% 42% 47% 53%/45% 55% 45% 55%;transform:rotate(0) scale(1)}
-  50%{border-radius:40% 60% 62% 38%/55% 40% 60% 45%;transform:rotate(8deg) scale(1.04)}
-  100%{border-radius:52% 48% 38% 62%/38% 62% 38% 62%;transform:rotate(-6deg) scale(.98)}
+  0%{transform:rotate(0) scale(1)}
+  50%{transform:rotate(14deg) scale(1.04,.98)}
+  100%{transform:rotate(-10deg) scale(.98,1.03)}
 }
 .hero-leaf{position:absolute;z-index:2;width:clamp(70px,8vw,120px);left:-26%;bottom:4%;overflow:visible}
 .hero-leaf path,.faq-leaf path,.hs-leaf path{fill:none;stroke:var(--moss);stroke-width:1.2;stroke-linecap:round}
-.badge{position:absolute;z-index:3;right:-8%;top:16%;display:flex;flex-direction:column;gap:2px;padding:14px 20px;border-radius:18px;background:rgba(244,239,231,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 20px 50px -20px rgba(29,37,32,.35);text-decoration:none;font-size:13px;color:var(--ink-2);transition:transform .5s var(--ease)}
+.badge{position:absolute;z-index:3;right:-8%;top:16%;display:flex;flex-direction:column;gap:2px;padding:14px 20px;border-radius:18px;background:var(--paper);box-shadow:0 20px 50px -20px rgba(29,37,32,.35);text-decoration:none;font-size:13px;color:var(--ink-2);transition:transform .5s var(--ease)}
 .badge:hover{transform:translateY(-4px)}
 .badge-stars{color:var(--clay);letter-spacing:.15em;font-size:13px}
 .badge strong{color:var(--ink);font-size:15px}
@@ -43,7 +43,7 @@
 .intro-sec{padding-block:clamp(100px,13vw,190px) clamp(70px,8vw,120px)}
 .scrub{font-family:var(--serif);font-weight:330;font-size:clamp(30px,3.9vw,62px);line-height:1.16;letter-spacing:-.02em;margin:0;max-width:22ch}
 .scrub em{color:var(--clay)}
-.sw{transition:opacity .25s linear}
+.sw{will-change:opacity}
 .facts{list-style:none;margin:clamp(60px,7vw,100px) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:28px;border-top:1px solid var(--line)}
 .facts li{padding-top:22px;font-family:var(--serif);font-size:clamp(20px,1.7vw,26px);line-height:1.25}
 .facts-k{display:block;font:600 11px/1.6 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
@@ -190,7 +190,7 @@
 
 /* ================= KONTAKT ================= */
 .contact{position:relative;overflow:hidden;background:var(--moss);color:var(--paper);padding-block:clamp(110px,13vw,200px);isolation:isolate}
-.contact::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(600px circle at var(--gx,70%) var(--gy,40%),rgba(201,132,111,.22),transparent 60%);transition:background .2s}
+.contact-glow{position:absolute;left:0;top:0;z-index:-1;width:1100px;height:1100px;margin:-550px 0 0 -550px;border-radius:50%;background:radial-gradient(circle,rgba(201,132,111,.24),transparent 60%);transform:translate3d(70vw,40%,0);transition:transform 1.2s var(--ease);will-change:transform;pointer-events:none}
 .contact-bg{position:absolute;inset:0;z-index:-2;opacity:.28;overflow:hidden}
 .contact-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--moss) 0%,rgba(38,51,43,.3) 40%,var(--moss) 100%)}
 .contact .pmove{inset:-12% 0}

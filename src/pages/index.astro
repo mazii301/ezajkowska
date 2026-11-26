@@ -3,7 +3,7 @@ import { Image, getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Leaf from '../components/Leaf.astro';
 import { site, prices, stock, unsplash, unsplashSet } from '../config/site';
-import portrait from '../assets/ewa-portret.png';
+import portrait from '../assets/ewa-portret.jpg';
 import roomSofa from '../assets/gabinet-sofa.jpg';
 import roomWide from '../assets/gabinet-wnetrze.jpg';
 import '../styles/home.css';
@@ -89,7 +89,7 @@ const ext = { target: '_blank', rel: 'noopener' };
   <div class="hero-visual">
     <div class="blob" aria-hidden="true"></div>
     <div class="hero-photo arch" data-clip style="--d:200">
-      <Image src={portrait} widths={[480, 760, 1100]} sizes="(max-width:900px) 80vw, 38vw" alt="Ewa Zajkowska, psycholog, w swoim gabinecie" loading="eager" fetchpriority="high" class="hero-img"/>
+      <Image src={portrait} widths={[640, 960, 1280]} quality={90} sizes="(max-width:900px) min(108vw, 560px), 660px" alt="Ewa Zajkowska, psycholog, w swoim gabinecie" loading="eager" fetchpriority="high" class="hero-img"/>
       <div class="hero-dim"></div>
     </div>
     <Leaf class="hero-leaf" draw delay={900}/>
@@ -258,6 +258,7 @@ const ext = { target: '_blank', rel: 'noopener' };
 </section>
 
 <section class="contact" id="kontakt" aria-labelledby="kontakt-h" data-glow>
+  <div class="contact-glow" aria-hidden="true"></div>
   <div class="contact-bg" aria-hidden="true"><div class="pmove" data-parallax="0.1"><img srcset={unsplashSet(stock.fog.id, [960, 1600, 2400])} sizes="100vw" src={unsplash(stock.fog.id, 1600)} alt="" loading="lazy" decoding="async"/></div></div>
   <div class="wrap contact-grid">
     <div>
