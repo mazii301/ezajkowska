@@ -1,0 +1,370 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Leaf from '../components/Leaf.astro';
+import { site, prices, stock, unsplash, unsplashSet } from '../config/site';
+import portrait from '../assets/ewa-portret.png';
+import roomSofa from '../assets/gabinet-sofa.jpg';
+import roomWide from '../assets/gabinet-wnetrze.jpg';
+import '../styles/home.css';
+
+const og = await getImage({ src: portrait, width: 1200, height: 630, fit: 'cover', format: 'jpg', position: 'top' });
+
+const nav = [
+  ['#pomoc', 'W czym pomagam'],
+  ['#jak-pracuje', 'Jak pracuję'],
+  ['#o-mnie', 'O mnie'],
+  ['#gabinet', 'Gabinet'],
+  ['#cennik', 'Cennik'],
+  ['#kontakt', 'Kontakt'],
+];
+
+const topicsA = ['Lęk', 'Stres', 'Obniżony nastrój', 'Depresja', 'Bezsenność', 'Kryzys emocjonalny', 'Wypalenie zawodowe'];
+const topicsB = ['Trudności szkolne', 'Relacje', 'Fobia społeczna', 'Koncentracja', 'Wahania nastroju', 'Napięcie i zmęczenie', 'Poczucie własnej wartości'];
+
+const care = [
+  { t: 'Lęk, stres i napięcie', d: 'Gdy niepokój towarzyszy Ci na co dzień, myśli krążą wokół najgorszych scenariuszy, a ciało jest stale w gotowości.', img: stock.leaves },
+  { t: 'Obniżony nastrój', d: 'Kiedy brakuje energii i radości, a zwykłe sprawy zaczynają przerastać. Szukamy tego, co podtrzymuje ten stan, i małych kroków do zmiany.', img: stock.fog },
+  { t: 'Kryzys emocjonalny', d: 'Strata, rozstanie, nagła zmiana albo poczucie, że wszystko się posypało. Interwencja kryzysowa pomaga odzyskać grunt pod nogami.', img: stock.path },
+  { t: 'Młodzież', d: 'Rozmowa z nastolatkiem w jego tempie: emocje, relacje z rówieśnikami, presja szkoły, poczucie własnej wartości.', img: stock.journal },
+  { t: 'Wsparcie dla rodziców', d: 'Gdy martwisz się o dziecko i nie wiesz, jak z nim rozmawiać. Porządkujemy obserwacje i planujemy kolejne kroki.', img: stock.tea },
+  { t: 'Sen, zmęczenie, wypalenie', d: 'Bezsenność, przeciążenie pracą i poczucie wyczerpania. Szukamy równowagi i sposobów na regenerację.', local: roomSofa, alt: 'Sofa i fotel w gabinecie MindLab' },
+];
+
+const steps = [
+  ['Pierwsza rozmowa', 'Opowiadasz, co Cię sprowadza i czego potrzebujesz. Nie musisz mieć niczego poukładanego. Od tego jesteśmy razem.'],
+  ['Zrozumienie', 'Wspólnie szukamy przyczyn trudności i mechanizmów, które je podtrzymują. Nazwanie ich często samo w sobie przynosi ulgę.'],
+  ['Strategie', 'Wypracowujemy konkretne sposoby radzenia sobie: z napięciem, z myślami, które nie pomagają, z kryzysem i w relacjach.'],
+  ['Codzienność', 'Przenosimy to, co działa, do Twojego życia. Celem jest większa samodzielność i dbanie o zdrowie psychiczne na co dzień.'],
+];
+
+const courses = ['Interwencja kryzysowa', 'Dialog motywujący', 'Trening umiejętności społecznych', 'Terapia reminiscencyjna', 'Porozumienie bez przemocy'];
+
+const faq = [
+  ['Kiedy warto zgłosić się do psychologa?', 'Nie trzeba czekać, aż będzie „bardzo źle”. Warto przyjść, gdy coś od dłuższego czasu odbiera Ci spokój, sen lub radość, gdy trudno poradzić sobie z ważną zmianą albo gdy po prostu chcesz lepiej zrozumieć siebie.'],
+  ['Czym różni się psycholog od psychiatry?', 'Psychiatra jest lekarzem: diagnozuje i może przepisać leki. Psycholog pracuje rozmową. Pomaga zrozumieć trudności, uczy sposobów radzenia sobie i wspiera w zmianie. Jeśli w trakcie spotkań okaże się, że warto skonsultować się z psychiatrą, powiem o tym otwarcie.'],
+  ['Jak wygląda pierwsza wizyta?', 'To rozmowa o tym, co Cię sprowadza, czego potrzebujesz i czego oczekujesz. Na koniec wspólnie ustalamy, czy i w jakiej formie warto się dalej spotykać. Nie musisz się specjalnie przygotowywać.'],
+  ['Czy przyjmuje Pani młodzież?', 'Tak. Pracuję z dorosłymi i z młodzieżą, prowadzę też konsultacje dla rodziców. W przypadku osób niepełnoletnich potrzebna jest zgoda rodzica lub opiekuna prawnego. Szczegóły ustalimy przy umawianiu wizyty.'],
+  ['Czy to, o czym mówię, zostaje między nami?', 'Tak. Psychologa obowiązuje tajemnica zawodowa. Wyjątki przewiduje prawo, przede wszystkim w sytuacji bezpośredniego zagrożenia życia lub zdrowia.'],
+  ['Czy możemy spotkać się online?', 'Tak. Konsultacje online kosztują tyle samo co w gabinecie. Potrzebujesz tylko spokojnego miejsca, w którym możesz swobodnie rozmawiać, i stabilnego internetu.'],
+  ['Jak umówić wizytę?', `Najprościej przez kalendarz w serwisie ZnanyLekarz, gdzie widać wolne terminy w gabinecie i online. Za wizytę w gabinecie zapłacisz na miejscu: ${site.payments}.`],
+];
+
+const ext = { target: '_blank', rel: 'noopener' };
+---
+<Base path="/" ogImage={og.src}>
+<div class="intro" data-intro aria-hidden="true">
+  <div class="intro-inner">
+    <Leaf/>
+    <div class="intro-name"><span>Ewa Zajkowska</span></div>
+    <div class="intro-role">Psycholog</div>
+  </div>
+</div>
+<div class="progress" data-progress aria-hidden="true"></div>
+
+<header class="top" data-header>
+  <div class="top-in">
+    <a class="brand" href="#tresc" aria-label="Ewa Zajkowska, psycholog – początek strony">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19.25" fill="none" stroke="currentColor" stroke-opacity=".35"/><path d="M20 33c.4-7 .6-15-.2-26M20.2 23c-5-1-8.3-4.6-7.8-9.6 4.4 1 7.5 4.6 7.8 9.6M20.3 17.4c4.4-.9 7.2-4.4 6.8-8.8-4.2.9-6.7 4.4-6.8 8.8" fill="none" stroke="var(--clay)" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <span><span class="brand-name">Ewa Zajkowska</span><span class="brand-role">Psycholog</span></span>
+    </a>
+    <nav class="nav" aria-label="Główna">{nav.map(([h, l]) => <a href={h}>{l}</a>)}</nav>
+    <a class="btn solid" href={site.bookingUrl} {...ext} data-magnet="0.2">Umów wizytę <span class="arr" aria-hidden="true">→</span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle><span></span><span></span><span class="sr-only">Menu</span></button>
+  </div>
+  <div class="menu" id="menu" data-menu>
+    <nav aria-label="Menu mobilne">{nav.map(([h, l]) => <a href={h}>{l}</a>)}</nav>
+    <div class="menu-foot">
+      <a class="btn solid" href={site.bookingUrl} {...ext}>Umów wizytę na ZnanyLekarz</a>
+      <span>{site.practice}<br/>{site.street}, {site.city}</span>
+    </div>
+  </div>
+</header>
+
+<main id="tresc">
+<div class="hero-track">
+<section class="hero" data-hero aria-labelledby="hero-h">
+  <div class="hero-copy">
+    <p class="eyebrow" data-reveal style="--d:0">Psycholog · Plewiska k. Poznania · online</p>
+    <h1 id="hero-h" data-lines style="--d:100">Bezpieczne miejsce,<br/> by <em>zatrzymać się</em><br/> i zrozumieć siebie.</h1>
+    <p class="lead" data-reveal style="--d:500">Nazywam się Ewa Zajkowska. Jako psycholog wspieram dorosłych i młodzież w trudnych emocjach, w kryzysie i w codziennym dbaniu o zdrowie psychiczne.</p>
+    <div class="hero-cta" data-reveal style="--d:650">
+      <a class="btn solid" href={site.bookingUrl} {...ext} data-magnet="0.25">Umów wizytę <span class="arr" aria-hidden="true">→</span></a>
+      <a class="btn" href="#o-mnie">Poznaj mnie</a>
+    </div>
+    <ul class="hero-meta" data-reveal style="--d:800">
+      <li><strong>Gabinet</strong> {site.street}, {site.city}</li>
+      <li><strong>Online</strong> z dowolnego miejsca</li>
+    </ul>
+  </div>
+  <div class="hero-visual">
+    <div class="blob" aria-hidden="true"></div>
+    <div class="hero-photo arch" data-clip style="--d:200">
+      <Image src={portrait} widths={[480, 760, 1100]} sizes="(max-width:900px) 80vw, 38vw" alt="Ewa Zajkowska, psycholog, w swoim gabinecie" loading="eager" fetchpriority="high" class="hero-img"/>
+      <div class="hero-dim"></div>
+    </div>
+    <Leaf class="hero-leaf" draw delay={900}/>
+    <a class="badge" href={site.bookingUrl} {...ext} data-reveal style="--d:1100">
+      <span class="badge-stars" aria-hidden="true">★★★★★</span>
+      <span><strong>{site.rating.value}</strong> · {site.rating.count} opinii na ZnanyLekarz</span>
+    </a>
+  </div>
+  <a class="scroll-hint" href="#start" aria-label="Przewiń do dalszej części"><span></span></a>
+</section>
+
+<div class="sheet" id="start">
+  <section class="wrap intro-sec" aria-label="Moje podejście">
+    <p class="eyebrow" data-reveal>Moje podejście</p>
+    <p class="scrub" data-scrub>Każda rozmowa zaczyna się od wysłuchania. Wspólnie szukamy źródeł tego, co Cię obciąża, i wypracowujemy sposoby radzenia sobie, które sprawdzają się w&nbsp;Twoim życiu. <em>Bez oceniania, z empatią i w Twoim tempie.</em></p>
+    <ul class="facts">
+      <li data-reveal style="--d:0"><span class="facts-k">Dla kogo</span>Dorośli i młodzież</li>
+      <li data-reveal style="--d:120"><span class="facts-k">Gdzie</span>Gabinet w Plewiskach i online</li>
+      <li data-reveal style="--d:240"><span class="facts-k">Nurt</span>Poznawczo-behawioralny</li>
+      <li data-reveal style="--d:360"><span class="facts-k">Jakość</span>Stała superwizja</li>
+    </ul>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="mq" data-marquee>{[0, 1].map(() => <div class="mq-row">{topicsA.map(t => <span>{t}<i>✦</i></span>)}</div>)}</div>
+    <div class="mq alt" data-marquee>{[0, 1].map(() => <div class="mq-row">{topicsB.map(t => <span>{t}<i>✦</i></span>)}</div>)}</div>
+  </div>
+</div>
+</div>
+
+<section class="care wrap" id="pomoc" aria-labelledby="pomoc-h">
+  <div class="care-head">
+    <div>
+      <p class="eyebrow" data-reveal>W czym pomagam</p>
+      <h2 id="pomoc-h" data-lines>Z czym możesz<br/> <em>przyjść</em></h2>
+    </div>
+    <p class="lead" data-reveal>Nie musisz mieć nazwy na to, co przeżywasz. Wystarczy, że coś od dłuższego czasu Ci ciąży. Poniżej kilka tematów, z którymi pracuję najczęściej.</p>
+  </div>
+  <div class="care-grid">
+    <ol class="care-list" data-care>
+      {care.map((c, i) => (
+        <li class={i === 0 ? 'on' : ''} data-reveal style={`--d:${(i % 3) * 90}`}>
+          <div class="care-row" tabindex="0">
+            <span class="care-n">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{c.t}</h3>
+            <p>{c.d}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <div class="care-frame arch" aria-hidden="true" data-clip>
+      {care.map((c, i) => (
+        <figure class={i === 0 ? 'on' : ''}>
+          {c.local
+            ? <Image src={c.local} widths={[480, 768]} sizes="34vw" alt="" loading="lazy"/>
+            : <img srcset={unsplashSet(c.img!.id, [480, 800, 1100], 4 / 3)} sizes="34vw" src={unsplash(c.img!.id, 800, 1067)} alt="" loading="lazy" decoding="async" width="800" height="1067"/>}
+        </figure>
+      ))}
+    </div>
+  </div>
+  <p class="care-note" data-reveal>Doświadczenie zdobywałam w Środowiskowym Centrum Zdrowia Psychicznego i w Środowiskowym Domu Samopomocy, wspierając osoby z doświadczeniem kryzysów psychicznych.</p>
+</section>
+
+<section class="hs" id="jak-pracuje" data-hscroll aria-labelledby="jak-h">
+  <div class="hs-sticky">
+    <div class="hs-track">
+      <div class="hs-intro">
+        <p class="eyebrow">Jak pracuję</p>
+        <h2 id="jak-h">Krok po kroku,<br/> <em>w Twoim tempie</em></h2>
+        <p>Pracuję w nurcie poznawczo-behawioralnym. To podejście skupione na tym, co dzieje się tu i teraz. Przyglądamy się temu, jak myśli, emocje i zachowania wpływają na siebie nawzajem, i co możesz z tym zrobić.</p>
+        <span class="hs-hint" aria-hidden="true">przewijaj <span>→</span></span>
+      </div>
+      {steps.map(([t, d], i) => (
+        <article class="hs-card">
+          <span class="hs-num">0{i + 1}</span>
+          <svg class="hs-ring" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" pathLength="1"/><circle cx="60" cy="60" r={14 + i * 12} pathLength="1"/></svg>
+          <h3>{t}</h3>
+          <p>{d}</p>
+        </article>
+      ))}
+      <article class="hs-card hs-quote">
+        <Leaf class="hs-leaf"/>
+        <blockquote>„Zawsze staram się zapewnić komfortową atmosferę i skupić się na indywidualnych potrzebach każdej osoby.”</blockquote>
+        <a class="btn light solid" href={site.bookingUrl} {...ext}>Umów pierwszą rozmowę <span class="arr" aria-hidden="true">→</span></a>
+      </article>
+    </div>
+    <div class="hs-ui" aria-hidden="true">
+      <div class="hs-progress"><span></span></div>
+      <div class="hs-dots">{[0, 1, 2, 3, 4, 5].map(() => <span class="hs-dot"></span>)}</div>
+    </div>
+  </div>
+</section>
+
+<section class="breath-sec" aria-labelledby="oddech-h">
+  <div class="wrap breath-grid">
+    <div>
+      <p class="eyebrow" data-reveal>Chwila dla siebie</p>
+      <h2 id="oddech-h" data-lines>Zatrzymaj się<br/> na <em>minutę</em></h2>
+      <p class="lead" data-reveal>Spróbuj prostego ćwiczenia: cztery sekundy wdechu, krótka pauza i sześć sekund wydechu. Wydłużony wydech pomaga ciału się wyciszyć.</p>
+      <p class="small" data-reveal>Ćwiczenie nie zastępuje konsultacji. Jeśli poczujesz zawroty głowy, przerwij i oddychaj swobodnie.</p>
+    </div>
+    <div class="breath" data-breath data-reveal>
+      <div class="breath-stage" aria-hidden="true">
+        <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
+        <span class="core"></span>
+      </div>
+      <div class="breath-text">
+        <p class="breath-label" data-breath-label aria-live="polite">Gotowe?</p>
+        <p class="breath-count" data-breath-count aria-hidden="true"></p>
+      </div>
+      <div class="breath-ui">
+        <button class="btn solid" type="button" data-breath-btn aria-pressed="false">Zacznij</button>
+        <span class="breath-cycles" data-breath-cycles></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about wrap" id="o-mnie" aria-labelledby="o-mnie-h">
+  <div class="about-photo">
+    <figure class="arch" data-clip>
+      <div class="pmove" data-parallax="0.08"><img srcset={unsplashSet(stock.tea.id, [480, 800, 1100], 1.35)} sizes="(max-width:900px) 90vw, 36vw" src={unsplash(stock.tea.id, 800, 1080)} alt={stock.tea.alt} loading="lazy" decoding="async" width="800" height="1080"/></div>
+    </figure>
+    <div class="about-card" data-reveal style="--d:300">
+      <span class="eyebrow">Etyka</span>
+      <p>Pracuję zgodnie z Kodeksem Etyczno-Zawodowym Psychologa. W trosce o jakość pracy jestem pod stałą superwizją.</p>
+    </div>
+  </div>
+  <div class="about-body">
+    <p class="eyebrow" data-reveal>O mnie</p>
+    <h2 id="o-mnie-h" data-lines>Empatia, zaufanie<br/> i <em>uważność</em></h2>
+    <p class="lead" data-reveal>Jestem absolwentką psychologii klinicznej na Uniwersytecie SWPS. Patrzę na zdrowie psychiczne całościowo: ważne jest to, co czujesz, ale też Twoje relacje, codzienność i to, co daje Ci siłę.</p>
+    <ol class="timeline">
+      <li data-reveal><span class="tl-k">Wykształcenie</span><h3>Psychologia kliniczna</h3><p>Uniwersytet SWPS</p></li>
+      <li data-reveal><span class="tl-k">W trakcie</span><h3>Szkolenie psychoterapeutyczne</h3><p>Czteroletnie szkolenie w nurcie poznawczo-behawioralnym, Uniwersytet SWPS</p></li>
+      <li data-reveal><span class="tl-k">Doświadczenie</span><h3>Środowiskowe Centrum Zdrowia Psychicznego i Środowiskowy Dom Samopomocy</h3><p>Wsparcie osób z doświadczeniem kryzysów psychicznych</p></li>
+      <li data-reveal><span class="tl-k">Kursy</span><h3>Stałe doszkalanie</h3>
+        <ul class="chips">{courses.map((c, i) => <li style={`--d:${i * 80}`}>{c}</li>)}</ul>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="room" id="gabinet" aria-labelledby="gabinet-h">
+  <div class="wrap room-grid">
+    <div class="room-text">
+      <p class="eyebrow" data-reveal>Gabinet</p>
+      <h2 id="gabinet-h" data-lines>{site.practice.replace('Gabinet Psychologiczny ', '')}<br/> <em>w Plewiskach</em></h2>
+      <p class="lead" data-reveal>Kameralny gabinet tuż za granicą Poznania. Miękka sofa, dwa fotele, zieleń i dzienne światło. Miejsce, w którym nikt się nie spieszy.</p>
+      <dl class="room-dl" data-reveal>
+        <dt>Adres</dt><dd>{site.practice}<br/>{site.street}, {site.postal} {site.city}</dd>
+        <dt>Dojazd</dt><dd><a class="link" href={site.mapsUrl} {...ext}>Wyznacz trasę w Mapach Google</a></dd>
+      </dl>
+    </div>
+    <figure class="room-a arch" data-clip>
+      <div class="pmove" data-parallax="0.06"><Image src={roomWide} widths={[480, 768]} sizes="(max-width:900px) 90vw, 34vw" alt="Wnętrze gabinetu MindLab: sofa, dwa fotele w pasy, rośliny i botaniczne panele na ścianach" loading="lazy"/></div>
+    </figure>
+    <figure class="room-b" data-clip style="--d:150">
+      <div class="pmove" data-parallax="-0.05"><Image src={roomSofa} widths={[480, 768]} sizes="(max-width:900px) 70vw, 24vw" alt="Szara sofa z poduszkami, lampa i rośliny w gabinecie" loading="lazy"/></div>
+    </figure>
+    <figure class="room-c" data-clip style="--d:300">
+      <img srcset={unsplashSet(stock.leaves.id, [400, 700, 1000], 1.25)} sizes="(max-width:900px) 50vw, 18vw" src={unsplash(stock.leaves.id, 700, 875)} alt={stock.leaves.alt} loading="lazy" decoding="async" width="700" height="875"/>
+    </figure>
+  </div>
+</section>
+
+<section class="prices wrap" id="cennik" aria-labelledby="cennik-h">
+  <div class="prices-head">
+    <p class="eyebrow" data-reveal>Cennik</p>
+    <h2 id="cennik-h" data-lines>Przejrzyście,<br/> <em>bez niespodzianek</em></h2>
+  </div>
+  <div class="prices-grid">
+    <ul class="price-list">
+      {prices.map((p, i) => (
+        <li data-reveal style={`--d:${i * 90}`}>
+          <span class="pl-name">{p.name}<small>{p.note}</small></span>
+          <span class="pl-dots" aria-hidden="true"></span>
+          <span class="pl-price">{p.price}</span>
+        </li>
+      ))}
+      <li class="price-foot" data-reveal>Płatność w gabinecie: {site.payments}. Terminy w gabinecie i online zarezerwujesz w serwisie ZnanyLekarz.</li>
+    </ul>
+    <a class="rating" href={site.bookingUrl} {...ext} data-reveal style="--d:200">
+      <span class="rating-num" data-count={site.rating.value}>{site.rating.value}</span>
+      <span class="rating-stars" aria-hidden="true"><span>★★★★★</span><span class="fill">★★★★★</span></span>
+      <span class="rating-txt">{site.rating.count} opinii pacjentów na ZnanyLekarz</span>
+      <span class="rating-go">Przeczytaj opinie <span class="arr" aria-hidden="true">→</span></span>
+    </a>
+  </div>
+</section>
+
+<section class="faq wrap" id="faq" aria-labelledby="faq-h">
+  <div class="faq-head">
+    <p class="eyebrow" data-reveal>Pytania</p>
+    <h2 id="faq-h" data-lines>Zanim <em>przyjdziesz</em></h2>
+    <Leaf class="faq-leaf" draw/>
+  </div>
+  <div class="faq-list">
+    {faq.map(([q, a]) => (
+      <details data-reveal>
+        <summary><span>{q}</span><i aria-hidden="true"></i></summary>
+        <div class="faq-a"><p>{a}</p></div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<section class="sos" aria-labelledby="sos-h">
+  <div class="wrap sos-grid">
+    <div data-reveal>
+      <h2 id="sos-h">Potrzebujesz pomocy od razu?</h2>
+      <p>Gabinet nie udziela pomocy w nagłych sytuacjach. Jeśli zagrożone jest Twoje życie lub zdrowie albo życie innej osoby, zadzwoń:</p>
+    </div>
+    <ul class="sos-list">
+      <li data-reveal style="--d:0"><a href="tel:112">112</a><span>numer alarmowy</span></li>
+      <li data-reveal style="--d:90"><a href="tel:800702222">800 70 2222</a><span>Centrum Wsparcia dla osób dorosłych w kryzysie psychicznym, całą dobę, bezpłatnie</span></li>
+      <li data-reveal style="--d:180"><a href="tel:116123">116 123</a><span>Kryzysowy Telefon Zaufania dla dorosłych</span></li>
+      <li data-reveal style="--d:270"><a href="tel:116111">116 111</a><span>Telefon Zaufania dla Dzieci i Młodzieży, całą dobę</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="contact" id="kontakt" aria-labelledby="kontakt-h" data-glow>
+  <div class="contact-bg" aria-hidden="true"><div class="pmove" data-parallax="0.1"><img srcset={unsplashSet(stock.fog.id, [960, 1600, 2400])} sizes="100vw" src={unsplash(stock.fog.id, 1600)} alt="" loading="lazy" decoding="async"/></div></div>
+  <div class="wrap contact-grid">
+    <div>
+      <p class="eyebrow light" data-reveal>Kontakt</p>
+      <h2 id="kontakt-h" data-lines>Pierwszy krok<br/> bywa <em>najtrudniejszy</em></h2>
+      <p class="lead" data-reveal>Nie musisz wiedzieć, od czego zacząć. Wystarczy, że się umówisz. Resztę poukładamy razem.</p>
+      <dl class="contact-dl" data-reveal>
+        <dt>Gabinet</dt><dd>{site.practice}<br/>{site.street}, {site.postal} {site.city}</dd>
+        <dt>Online</dt><dd>Konsultacje przez internet</dd>
+        {site.phone && <><dt>Telefon</dt><dd><a class="link" href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a></dd></>}
+        {site.email && <><dt>E-mail</dt><dd><a class="link" href={`mailto:${site.email}`}>{site.email}</a></dd></>}
+        <dt>Rezerwacja</dt><dd><a class="link" href={site.bookingUrl} {...ext}>ZnanyLekarz.pl</a></dd>
+      </dl>
+    </div>
+    <div class="contact-cta">
+      <a class="orb" href={site.bookingUrl} {...ext} data-magnet="0.35">
+        <svg viewBox="0 0 200 200" aria-hidden="true"><defs><path id="orb-c" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs><text><textPath href="#orb-c">umów wizytę · umów wizytę · umów wizytę · </textPath></text></svg>
+        <span class="orb-in">Umów<br/>wizytę <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-grid">
+    <div>
+      <p class="foot-name">Ewa Zajkowska</p>
+      <p class="foot-role">Psycholog · {site.practice}</p>
+    </div>
+    <nav aria-label="Stopka">{nav.map(([h, l]) => <a href={h}>{l}</a>)}<a href="/polityka-prywatnosci/">Polityka prywatności</a></nav>
+    <div class="foot-small">
+      <p>© {new Date().getFullYear()} Ewa Zajkowska. Strona nie używa plików cookies.</p>
+      <p>Zdjęcia nastrojowe: {Object.values(stock).map((s, i, a) => <><a href={s.href} {...ext}>{s.author}</a>{i < a.length - 1 ? ', ' : ''}</>)} / Unsplash.</p>
+    </div>
+  </div>
+  <p class="foot-big" aria-hidden="true">Ewa Zajkowska</p>
+</footer>
+
+<script>
+import '../scripts/smooth-scroll';
+import '../scripts/motion';
+</script>
+</Base>

@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Leaf from '../components/Leaf.astro';
+---
+<Base title="Nie znaleziono strony – Ewa Zajkowska" path="/404/" noindex>
+<style>
+  .nf{min-height:100svh;display:grid;place-items:center;text-align:center;padding:40px var(--pad)}
+  .nf svg{width:80px;margin:0 auto 30px}
+  .nf path{fill:none;stroke:var(--moss);stroke-width:1.2;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2s var(--ease) forwards}
+  .nf h1{font-size:clamp(40px,6vw,80px);line-height:1;margin-bottom:20px}
+  .nf p{color:var(--ink-2);margin:0 0 34px}
+</style>
+<main id="tresc" class="nf">
+  <div>
+    <Leaf/>
+    <h1>Tej strony <em>tu nie ma</em></h1>
+    <p>Mogła zostać przeniesiona albo adres zawiera literówkę.</p>
+    <a class="btn solid" href="/">Wróć na stronę główną</a>
+  </div>
+</main>
+</Base>
