@@ -78,16 +78,23 @@ if (!reduced && 'IntersectionObserver' in window) {
     if (e.isIntersecting) { e.target.classList.add('in'); e.target.classList.remove('pending'); io.unobserve(e.target); }
   }), { rootMargin: '0px 0px -8% 0px' });
   $$('[data-reveal], [data-lines], [data-clip], [data-draw]').forEach(el => {
+    if (el.closest('[data-hero]')) return; // hero ukrywa CSS od pierwszej klatki, start po intrze
     const r = el.getBoundingClientRect();
-    if (r.top < innerHeight * 0.92 && !el.closest('[data-hero]')) { el.classList.add('in'); return; }
+    if (r.top < innerHeight * 0.92) { el.classList.add('in'); return; }
     el.classList.add('pending');
     io.observe(el);
   });
   // Elementy hero startują po intrze
-  const kick = () => $$('[data-hero] [data-reveal], [data-hero] [data-lines], [data-hero] [data-clip], [data-hero] [data-draw]').forEach(el => { el.classList.add('in'); el.classList.remove('pending'); });
-  if (root.classList.contains('is-loaded')) kick();
-  else new MutationObserver((_, o) => { if (root.classList.contains('is-loaded')) { kick(); o.disconnect(); } }).observe(root, { attributes: true, attributeFilter: ['class'] });
-  $$('[data-hero] [data-reveal], [data-hero] [data-lines], [data-hero] [data-clip], [data-hero] [data-draw]').forEach(el => el.classList.add('pending'));
+  // Start dopiero gdy: intro zniknęło, fonty są gotowe i zdjęcie jest zdekodowane (bez przeskoków).
+  const heroImg = $<HTMLImageElement>('[data-hero] img');
+  const imgReady = heroImg ? (heroImg.complete ? Promise.resolve() : new Promise(r => { heroImg.addEventListener('load', r, { once: true }); heroImg.addEventListener('error', r, { once: true }); })).then(() => heroImg.decode?.().catch(() => {})) : Promise.resolve();
+  const fontsReady = (document as any).fonts?.ready ?? Promise.resolve();
+  const loaded = new Promise<void>(r => {
+    if (root.classList.contains('is-loaded')) r();
+    else new MutationObserver((_, o) => { if (root.classList.contains('is-loaded')) { o.disconnect(); r(); } }).observe(root, { attributes: true, attributeFilter: ['class'] });
+  });
+  const kick = () => requestAnimationFrame(() => requestAnimationFrame(() => $$('[data-hero] [data-reveal], [data-hero] [data-lines], [data-hero] [data-clip], [data-hero] [data-draw]').forEach(el => el.classList.add('in'))));
+  Promise.race([Promise.all([loaded, fontsReady, imgReady]), new Promise(r => setTimeout(r, 3000))]).then(kick);
   document.addEventListener('focusin', e => { const p = (e.target as Element).closest?.('.pending'); if (p) { p.classList.add('in'); p.classList.remove('pending'); } });
 }
 
@@ -125,7 +132,7 @@ $$('[data-lines]').forEach(el => {
     });
   };
   const f = (document as any).fonts?.ready ?? Promise.resolve();
-  f.then(group);
+  f.then(() => { group(); el.classList.add('split'); });
 });
 
 /* ---------- akapit podświetlany słowo po słowie przy przewijaniu ---------- */

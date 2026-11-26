@@ -11,7 +11,7 @@
   --ease-io:cubic-bezier(.76,0,.24,1);
 }
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scrollbar-gutter:stable}
 html.lenis{scroll-behavior:auto}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.7 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip}
@@ -124,6 +124,13 @@ html.menu-open .menu nav a:nth-child(6){transition-delay:.25s}
 [data-draw] path,[data-draw] line,[data-draw] circle{stroke-dasharray:1;stroke-dashoffset:0}
 .pending[data-draw] path,.pending[data-draw] line,.pending[data-draw] circle{stroke-dashoffset:1}
 .in[data-draw] path,.in[data-draw] line,.in[data-draw] circle{stroke-dashoffset:0;transition:stroke-dashoffset 2.4s var(--ease) calc(var(--d,0) * 1ms)}
+/* hero: stan początkowy od pierwszej klatki, zanim zadziała skrypt */
+html.js-motion [data-hero] [data-reveal]:not(.in){opacity:0;transform:translate3d(0,40px,0)}
+html.js-motion [data-hero] [data-clip]:not(.in){clip-path:inset(100% 0 0 0)}
+html.js-motion [data-hero] [data-clip]:not(.in) img{transform:scale(1.25)}
+html.js-motion [data-hero] [data-lines]:not(.split){visibility:hidden}
+html.js-motion [data-hero] [data-lines]:not(.in) .line-in{transform:translate3d(0,108%,0) rotate(2deg);transform-origin:0 100%}
+html.js-motion [data-hero] [data-draw]:not(.in) path{stroke-dashoffset:1}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }

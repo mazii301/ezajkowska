@@ -49,6 +49,10 @@ const ld = {
 {og && <meta property="og:image" content={og}/>}
 <meta name="twitter:card" content="summary_large_image"/>
 <script type="application/ld+json" set:html={JSON.stringify(ld)}/>
+<script is:inline>
+  // Ukrycie elementów hero od pierwszej klatki (animacje wejścia), tylko gdy ruch jest dozwolony.
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js-motion');
+</script>
 <slot name="head"/>
 </head>
 <body>
