@@ -176,36 +176,6 @@ if (hero && !reduced) {
   });
 }
 
-/* ---------- przewijanie poziome „Jak pracuję” ---------- */
-const hs = $('[data-hscroll]');
-if (hs) {
-  const track = $('.hs-track', hs)!;
-  const mq = matchMedia('(min-width: 900px)');
-  const dots = $$('.hs-dot', hs);
-  const prog = $('.hs-progress span', hs);
-  const size = () => {
-    if (!mq.matches || reduced) { hs.style.height = ''; track.style.transform = ''; return; }
-    const dist = track.scrollWidth - innerWidth;
-    hs.style.height = `${innerHeight + dist}px`;
-  };
-  size(); addEventListener('resize', size); (document as any).fonts?.ready?.then(size);
-  ticks.push(() => {
-    if (!mq.matches || reduced) return;
-    const r = hs.getBoundingClientRect();
-    const dist = track.scrollWidth - innerWidth;
-    const p = clamp(-r.top / Math.max(1, dist));
-    track.style.transform = `translate3d(${-p * dist}px, 0, 0)`;
-    if (prog) prog.style.transform = `scaleX(${p})`;
-    const active = Math.min(dots.length - 1, Math.round(p * (dots.length - 1)));
-    dots.forEach((d, i) => d.classList.toggle('on', i === active));
-  });
-}
-
-if ('IntersectionObserver' in window) {
-  const cio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('seen'); cio.unobserve(e.target); } }), { threshold: 0.5 });
-  $$('.hs-card').forEach(c => cio.observe(c));
-}
-
 /* ---------- lista „W czym pomagam”: zdjęcie zmienia się z wierszem ---------- */
 const care = $('[data-care]');
 if (care) {
@@ -284,49 +254,6 @@ if (fine && !reduced) $$('[data-glow]').forEach(el => {
     el.style.setProperty('--gy', `${e.clientY - r.top}px`);
   });
 });
-
-/* ---------- ćwiczenie oddechowe ---------- */
-const breath = $('[data-breath]');
-if (breath) {
-  const btn = $<HTMLButtonElement>('[data-breath-btn]', breath)!;
-  const label = $('[data-breath-label]', breath)!;
-  const count = $('[data-breath-count]', breath)!;
-  const cycles = $('[data-breath-cycles]', breath)!;
-  const phases = [
-    { name: 'Wdech', s: 4, cls: 'inhale' },
-    { name: 'Pauza', s: 2, cls: 'hold' },
-    { name: 'Wydech', s: 6, cls: 'exhale' },
-  ];
-  let timer = 0, running = false, n = 0;
-  const stop = (msg = 'Gotowe?') => {
-    running = false; clearTimeout(timer); clearInterval((breath as any)._iv);
-    breath.className = breath.className.replace(/\b(inhale|hold|exhale|running)\b/g, '').trim();
-    label.textContent = msg; count.textContent = ''; btn.textContent = 'Zacznij'; btn.setAttribute('aria-pressed', 'false');
-  };
-  const phase = (i: number) => {
-    if (!running) return;
-    const p = phases[i];
-    breath.classList.remove('inhale', 'hold', 'exhale'); breath.classList.add(p.cls);
-    breath.style.setProperty('--dur', `${p.s}s`);
-    label.textContent = p.name;
-    let left = p.s; count.textContent = String(left);
-    clearInterval((breath as any)._iv);
-    (breath as any)._iv = setInterval(() => { left--; if (left > 0) count.textContent = String(left); }, 1000);
-    timer = window.setTimeout(() => {
-      if (i === phases.length - 1) {
-        n++; cycles.textContent = `${n} ${n === 1 ? 'oddech' : n < 5 ? 'oddechy' : 'oddechów'}`;
-        if (n >= 6) { stop('Jak się teraz czujesz?'); return; }
-      }
-      phase((i + 1) % phases.length);
-    }, p.s * 1000);
-  };
-  btn.addEventListener('click', () => {
-    if (running) { stop(); return; }
-    running = true; n = 0; cycles.textContent = '';
-    breath.classList.add('running'); btn.textContent = 'Zatrzymaj'; btn.setAttribute('aria-pressed', 'true');
-    phase(0);
-  });
-}
 
 /* ---------- FAQ: płynne otwieranie ---------- */
 $$<HTMLDetailsElement>('.faq details').forEach(d => {

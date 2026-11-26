@@ -12,7 +12,6 @@ const og = await getImage({ src: portrait, width: 1200, height: 630, fit: 'cover
 
 const nav = [
   ['#pomoc', 'W czym pomagam'],
-  ['#jak-pracuje', 'Jak pracuję'],
   ['#o-mnie', 'O mnie'],
   ['#gabinet', 'Gabinet'],
   ['#cennik', 'Cennik'],
@@ -26,28 +25,17 @@ const care = [
   { t: 'Lęk, stres i napięcie', d: 'Gdy niepokój towarzyszy Ci na co dzień, myśli krążą wokół najgorszych scenariuszy, a ciało jest stale w gotowości.', img: stock.leaves },
   { t: 'Obniżony nastrój', d: 'Kiedy brakuje energii i radości, a zwykłe sprawy zaczynają przerastać. Szukamy tego, co podtrzymuje ten stan, i małych kroków do zmiany.', img: stock.fog },
   { t: 'Kryzys emocjonalny', d: 'Strata, rozstanie, nagła zmiana albo poczucie, że wszystko się posypało. Interwencja kryzysowa pomaga odzyskać grunt pod nogami.', img: stock.path },
-  { t: 'Młodzież', d: 'Rozmowa z nastolatkiem w jego tempie: emocje, relacje z rówieśnikami, presja szkoły, poczucie własnej wartości.', img: stock.journal },
-  { t: 'Wsparcie dla rodziców', d: 'Gdy martwisz się o dziecko i nie wiesz, jak z nim rozmawiać. Porządkujemy obserwacje i planujemy kolejne kroki.', img: stock.tea },
-  { t: 'Sen, zmęczenie, wypalenie', d: 'Bezsenność, przeciążenie pracą i poczucie wyczerpania. Szukamy równowagi i sposobów na regenerację.', local: roomSofa, alt: 'Sofa i fotel w gabinecie MindLab' },
+  { t: 'Młodzież i rodzice', d: 'Rozmowa z nastolatkiem w jego tempie: emocje, relacje, presja szkoły. A gdy martwisz się o dziecko, wspólnie planujemy kolejne kroki.', img: stock.journal },
 ];
 
-const steps = [
-  ['Pierwsza rozmowa', 'Opowiadasz, co Cię sprowadza i czego potrzebujesz. Nie musisz mieć niczego poukładanego. Od tego jesteśmy razem.'],
-  ['Zrozumienie', 'Wspólnie szukamy przyczyn trudności i mechanizmów, które je podtrzymują. Nazwanie ich często samo w sobie przynosi ulgę.'],
-  ['Strategie', 'Wypracowujemy konkretne sposoby radzenia sobie: z napięciem, z myślami, które nie pomagają, z kryzysem i w relacjach.'],
-  ['Codzienność', 'Przenosimy to, co działa, do Twojego życia. Celem jest większa samodzielność i dbanie o zdrowie psychiczne na co dzień.'],
-];
 
 const courses = ['Interwencja kryzysowa', 'Dialog motywujący', 'Trening umiejętności społecznych', 'Terapia reminiscencyjna', 'Porozumienie bez przemocy'];
 
 const faq = [
   ['Kiedy warto zgłosić się do psychologa?', 'Nie trzeba czekać, aż będzie „bardzo źle”. Warto przyjść, gdy coś od dłuższego czasu odbiera Ci spokój, sen lub radość, gdy trudno poradzić sobie z ważną zmianą albo gdy po prostu chcesz lepiej zrozumieć siebie.'],
   ['Czym różni się psycholog od psychiatry?', 'Psychiatra jest lekarzem: diagnozuje i może przepisać leki. Psycholog pracuje rozmową. Pomaga zrozumieć trudności, uczy sposobów radzenia sobie i wspiera w zmianie. Jeśli w trakcie spotkań okaże się, że warto skonsultować się z psychiatrą, powiem o tym otwarcie.'],
-  ['Jak wygląda pierwsza wizyta?', 'To rozmowa o tym, co Cię sprowadza, czego potrzebujesz i czego oczekujesz. Na koniec wspólnie ustalamy, czy i w jakiej formie warto się dalej spotykać. Nie musisz się specjalnie przygotowywać.'],
-  ['Czy przyjmuje Pani młodzież?', 'Tak. Pracuję z dorosłymi i z młodzieżą, prowadzę też konsultacje dla rodziców. W przypadku osób niepełnoletnich potrzebna jest zgoda rodzica lub opiekuna prawnego. Szczegóły ustalimy przy umawianiu wizyty.'],
-  ['Czy to, o czym mówię, zostaje między nami?', 'Tak. Psychologa obowiązuje tajemnica zawodowa. Wyjątki przewiduje prawo, przede wszystkim w sytuacji bezpośredniego zagrożenia życia lub zdrowia.'],
-  ['Czy możemy spotkać się online?', 'Tak. Konsultacje online kosztują tyle samo co w gabinecie. Potrzebujesz tylko spokojnego miejsca, w którym możesz swobodnie rozmawiać, i stabilnego internetu.'],
-  ['Jak umówić wizytę?', `Najprościej przez kalendarz w serwisie ZnanyLekarz, gdzie widać wolne terminy w gabinecie i online. Za wizytę w gabinecie zapłacisz na miejscu: ${site.payments}.`],
+  ['Jak wygląda pierwsza wizyta?', 'To 50-minutowa rozmowa o tym, co Cię sprowadza, czego potrzebujesz i czego oczekujesz. Na koniec wspólnie ustalamy, czy i w jakiej formie warto się dalej spotykać. Nie musisz się specjalnie przygotowywać.'],
+  ['Czy to, o czym mówię, zostaje między nami?', 'Tak. Psychologa obowiązuje tajemnica zawodowa. Wyjątki przewiduje prawo, przede wszystkim w sytuacji bezpośredniego zagrożenia życia lub zdrowia. W przypadku osób niepełnoletnich na spotkania potrzebna jest zgoda rodzica lub opiekuna.'],
 ];
 
 const ext = { target: '_blank', rel: 'noopener' };
@@ -76,7 +64,7 @@ const ext = { target: '_blank', rel: 'noopener' };
     <nav aria-label="Menu mobilne">{nav.map(([h, l]) => <a href={h}>{l}</a>)}</nav>
     <div class="menu-foot">
       <a class="btn solid" href={site.bookingUrl} {...ext}>Umów wizytę na ZnanyLekarz</a>
-      <span>{site.practice}<br/>{site.street}, {site.city}</span>
+      <span>{site.practice}<br/>{site.street}, {site.city}<br/><a href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a></span>
     </div>
   </div>
 </header>
@@ -95,6 +83,7 @@ const ext = { target: '_blank', rel: 'noopener' };
     <ul class="hero-meta" data-reveal style="--d:800">
       <li><strong>Gabinet</strong> {site.street}, {site.city}</li>
       <li><strong>Online</strong> z dowolnego miejsca</li>
+      <li><strong>Przyjmuję</strong> we wtorki</li>
     </ul>
   </div>
   <div class="hero-visual">
@@ -161,62 +150,7 @@ const ext = { target: '_blank', rel: 'noopener' };
       ))}
     </div>
   </div>
-  <p class="care-note" data-reveal>Doświadczenie zdobywałam w Środowiskowym Centrum Zdrowia Psychicznego i w Środowiskowym Domu Samopomocy, wspierając osoby z doświadczeniem kryzysów psychicznych.</p>
-</section>
-
-<section class="hs" id="jak-pracuje" data-hscroll aria-labelledby="jak-h">
-  <div class="hs-sticky">
-    <div class="hs-track">
-      <div class="hs-intro">
-        <p class="eyebrow">Jak pracuję</p>
-        <h2 id="jak-h">Krok po kroku,<br/> <em>w Twoim tempie</em></h2>
-        <p>Pracuję w nurcie poznawczo-behawioralnym. To podejście skupione na tym, co dzieje się tu i teraz. Przyglądamy się temu, jak myśli, emocje i zachowania wpływają na siebie nawzajem, i co możesz z tym zrobić.</p>
-        <span class="hs-hint" aria-hidden="true">przewijaj <span>→</span></span>
-      </div>
-      {steps.map(([t, d], i) => (
-        <article class="hs-card">
-          <span class="hs-num">0{i + 1}</span>
-          <svg class="hs-ring" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" pathLength="1"/><circle cx="60" cy="60" r={14 + i * 12} pathLength="1"/></svg>
-          <h3>{t}</h3>
-          <p>{d}</p>
-        </article>
-      ))}
-      <article class="hs-card hs-quote">
-        <Leaf class="hs-leaf"/>
-        <blockquote>„Zawsze staram się zapewnić komfortową atmosferę i skupić się na indywidualnych potrzebach każdej osoby.”</blockquote>
-        <a class="btn light solid" href={site.bookingUrl} {...ext}>Umów pierwszą rozmowę <span class="arr" aria-hidden="true">→</span></a>
-      </article>
-    </div>
-    <div class="hs-ui" aria-hidden="true">
-      <div class="hs-progress"><span></span></div>
-      <div class="hs-dots">{[0, 1, 2, 3, 4, 5].map(() => <span class="hs-dot"></span>)}</div>
-    </div>
-  </div>
-</section>
-
-<section class="breath-sec" aria-labelledby="oddech-h">
-  <div class="wrap breath-grid">
-    <div>
-      <p class="eyebrow" data-reveal>Chwila dla siebie</p>
-      <h2 id="oddech-h" data-lines>Zatrzymaj się<br/> na <em>minutę</em></h2>
-      <p class="lead" data-reveal>Spróbuj prostego ćwiczenia: cztery sekundy wdechu, krótka pauza i sześć sekund wydechu. Wydłużony wydech pomaga ciału się wyciszyć.</p>
-      <p class="small" data-reveal>Ćwiczenie nie zastępuje konsultacji. Jeśli poczujesz zawroty głowy, przerwij i oddychaj swobodnie.</p>
-    </div>
-    <div class="breath" data-breath data-reveal>
-      <div class="breath-stage" aria-hidden="true">
-        <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span>
-        <span class="core"></span>
-      </div>
-      <div class="breath-text">
-        <p class="breath-label" data-breath-label aria-live="polite">Gotowe?</p>
-        <p class="breath-count" data-breath-count aria-hidden="true"></p>
-      </div>
-      <div class="breath-ui">
-        <button class="btn solid" type="button" data-breath-btn aria-pressed="false">Zacznij</button>
-        <span class="breath-cycles" data-breath-cycles></span>
-      </div>
-    </div>
-  </div>
+  <p class="care-note" data-reveal>Pracuję w nurcie poznawczo-behawioralnym, skupionym na tym, co dzieje się tu i teraz. Doświadczenie zdobywałam w Środowiskowym Centrum Zdrowia Psychicznego i w Środowiskowym Domu Samopomocy, wspierając osoby z doświadczeniem kryzysów psychicznych.</p>
 </section>
 
 <section class="about wrap" id="o-mnie" aria-labelledby="o-mnie-h">
@@ -281,7 +215,7 @@ const ext = { target: '_blank', rel: 'noopener' };
           <span class="pl-price">{p.price}</span>
         </li>
       ))}
-      <li class="price-foot" data-reveal>Płatność w gabinecie: {site.payments}. Terminy w gabinecie i online zarezerwujesz w serwisie ZnanyLekarz.</li>
+      <li class="price-foot" data-reveal>Przyjmuję we wtorki. Płatność w gabinecie: {site.payments}. Termin zarezerwujesz na ZnanyLekarz albo telefonicznie: <a class="link" href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a>.</li>
     </ul>
     <a class="rating" href={site.bookingUrl} {...ext} data-reveal style="--d:200">
       <span class="rating-num" data-count={site.rating.value}>{site.rating.value}</span>
@@ -333,6 +267,7 @@ const ext = { target: '_blank', rel: 'noopener' };
       <dl class="contact-dl" data-reveal>
         <dt>Gabinet</dt><dd>{site.practice}<br/>{site.street}, {site.postal} {site.city}</dd>
         <dt>Online</dt><dd>Konsultacje przez internet</dd>
+        <dt>Kiedy</dt><dd>Wtorki, sesja trwa {site.session}</dd>
         {site.phone && <><dt>Telefon</dt><dd><a class="link" href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a></dd></>}
         {site.email && <><dt>E-mail</dt><dd><a class="link" href={`mailto:${site.email}`}>{site.email}</a></dd></>}
         <dt>Rezerwacja</dt><dd><a class="link" href={site.bookingUrl} {...ext}>ZnanyLekarz.pl</a></dd>

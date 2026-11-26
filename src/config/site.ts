@@ -14,17 +14,18 @@ export const site = {
   region: 'wielkopolskie',
   mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Zielarska+120c%2F7%2C+62-064+Plewiska',
   bookingUrl: 'https://www.znanylekarz.pl/profil/ewa-zajkowska',
-  phone: '', // np. '+48 600 000 000'
-  email: '', // np. 'kontakt@ezajkowska.pl'
+  phone: '+48 793 385 434',
+  email: 'zajkowskaewa15@gmail.com',
+  hours: 'Wtorki',
+  session: '50 min',
   rating: { value: '5,0', count: 15 },
   payments: 'gotówka lub BLIK',
 };
 
 export const prices = [
-  { name: 'Konsultacja psychologiczna w gabinecie', note: 'pierwsza i kolejne wizyty', price: '200 zł' },
-  { name: 'Konsultacja psychologiczna online', note: 'z dowolnego miejsca', price: '200 zł' },
-  { name: 'Interwencja kryzysowa', note: 'w gabinecie lub online', price: '200 zł' },
-  { name: 'Konsultacja dla rodziców', note: 'gdy martwisz się o dziecko', price: '200 zł' },
+  { name: 'Konsultacja psychologiczna w gabinecie', note: '50 minut', price: '200 zł' },
+  { name: 'Konsultacja psychologiczna online', note: '50 minut', price: '200 zł' },
+  { name: 'Konsultacja dla rodziców', note: '50 minut, w gabinecie lub online', price: '200 zł' },
 ];
 
 // Zdjęcia z Unsplash ładowane z ich CDN (licencja Unsplash, autorzy w stopce).
