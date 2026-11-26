@@ -17,13 +17,14 @@ npm run dev      # podgląd z odświeżaniem
 npm run build    # gotowa strona w dist/
 ```
 
-## Cloudflare Pages (pierwsze wdrożenie)
+## Cloudflare (Workers, połączone z GitHubem)
 
-1. Cloudflare → Workers & Pages → Create → Pages → Connect to Git → wybierz repo `ezajkowska`.
-2. Framework preset: **Astro**. Build command: `npm run build`. Output directory: `dist`.
-3. Environment variable: `NODE_VERSION` = `22`.
-4. Save and Deploy. Strona pojawi się pod adresem `ezajkowska.pages.dev` (ten adres ma `noindex`, żeby nie dublować domeny w Google).
-5. Po zakupie domeny: projekt → Custom domains → `ezajkowska.pl` i `www.ezajkowska.pl`.
-   Najprościej, gdy domena ma DNS w Cloudflare (dodaj domenę do Cloudflare i zmień serwery DNS u rejestratora).
+Ustawienia projektu w Cloudflare (Workers & Pages → Create → Import a repository → `ezajkowska`):
+
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+- Katalog ze stroną (`dist`) jest wskazany w `wrangler.jsonc`, więc w panelu nie ma pola „output directory”.
+
+Strona działa pod adresem `ezajkowska.<konto>.workers.dev`. Po zakupie domeny: projekt → Settings → Domains & Routes → Add → Custom domain → `ezajkowska.pl` (i `www.ezajkowska.pl`). Najprościej, gdy domena ma DNS w Cloudflare.
 
 Każdy push do `main` buduje i publikuje stronę automatycznie.
